@@ -71,7 +71,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 /* METRICS */
 .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
 .mcard{background:var(--bg);border-radius:var(--rl);padding:22px;box-shadow:var(--neu-out);position:relative;overflow:hidden;transition:all 0.25s;cursor:default}
-.mcard:hover{transform:translateY(-3px);box-shadow:8px 8px 20px #C8CAD4,-8px -8px 20px #FFFFFF}
+.mcard:hover{transform:translateY(-2px)}
 .mcard-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
 .mcard-icon svg{width:22px;height:22px}
 .mcard-icon.purple{background:var(--purple-light)}
@@ -253,6 +253,12 @@ select{background:var(--bg);border:none;box-shadow:var(--neu-in);color:var(--tex
 .artist-grid-name{font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%}
 .artist-grid-count{font-size:11px;color:var(--purple);font-weight:700}
 .artist-grid-wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px;margin-bottom:20px}
+
+[data-theme="dark"] .mcard:hover{box-shadow:6px 6px 14px #050709,-6px -6px 14px #141924;transform:translateY(-2px)}
+[data-theme="dark"] .card:hover{box-shadow:6px 6px 14px #050709,-6px -6px 14px #141924}
+[data-theme="dark"] .radio-card:hover{box-shadow:6px 6px 14px #050709,-6px -6px 14px #141924;transform:translateY(-2px);border:none}
+[data-theme="dark"] .artist-grid-card:hover{box-shadow:5px 5px 12px #050709,-5px -5px 12px #141924;transform:translateY(-2px)}
+[data-theme="dark"] .nav-btn:hover{box-shadow:4px 4px 10px #050709,-4px -4px 10px #141924}
 </style>
 </head>
 <body>
@@ -632,6 +638,8 @@ function toggleTheme(){
 }
 const savedTheme=localStorage.getItem('corillo-theme')
 if(savedTheme)document.documentElement.setAttribute('data-theme',savedTheme)
+
+function aColor(i){return['#7B2FFF','#00C48C','#3D8EFF','#FFB020','#FF4DAA','#FF6B35'][i%6]}
 
 // ── SPOTIFY ARTIST PHOTOS ──
 const photoCache={}
