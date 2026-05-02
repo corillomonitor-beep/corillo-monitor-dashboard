@@ -528,11 +528,23 @@ function fmtT(ts){if(!ts)return'—';return new Date(ts).toLocaleTimeString('es-
 
 
 async function loadAll(){
-  showToast('Actualizando...')
+  showToast('Cargando datos...')
   try{
-    const{data,error}=await db.from('detections').select('*').eq('is_music',true).order('detected_at',{ascending:false}).limit(10000)
-    if(error)throw error
-    allData=data||[]
+    allData=[]
+    let page=0
+    const pageSize=1000
+    while(true){
+      const{data,error}=await db.from('detections')
+        .select('*')
+        .eq('is_music',true)
+        .order('detected_at',{ascending:false})
+        .range(page*pageSize,(page+1)*pageSize-1)
+      if(error)throw error
+      if(!data||data.length===0)break
+      allData=[...allData,...data]
+      if(data.length<pageSize)break
+      page++
+    }
     updateMetrics();renderDashTable();renderTopDash();renderChart()
     document.getElementById('dot-artists').style.display='block'
     showToast('✓ '+allData.length.toLocaleString()+' detecciones cargadas')
